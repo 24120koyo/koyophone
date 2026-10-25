@@ -1,3 +1,37 @@
+
+function renderCalls() {
+  const names = [
+    '로보 프로스터',
+    '이로 클라우드',
+    '니노 선데이',
+    '오토 레이니'
+  ];
+
+  $('#call-list').innerHTML = names.map(name => {
+    const p = people[name];
+    const count = callCounts[name] || 0;
+
+    return `
+      <button class="callrow" data-call="${name}">
+        <div class="avatar" style="background:${p.color}">
+          ${p.initial}
+        </div>
+        <div class="item-main">
+          <strong>${name}</strong>
+          <p>${count > 0 ? '발신 통화' : '최근 통화 기록 없음'}</p>
+        </div>
+        <span class="calltype">☎</span>
+        <span class="callmeta">${count > 0 ? count + '회' : '전화'}</span>
+      </button>
+    `;
+  }).join('');
+
+  $$('[data-call]').forEach(button => {
+    button.addEventListener('click', () => {
+      startCall(button.dataset.call);
+    });
+  });
+}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
